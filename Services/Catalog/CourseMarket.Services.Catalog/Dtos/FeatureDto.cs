@@ -1,6 +1,6 @@
 ﻿namespace CourseMarket.Services.Catalog.Dtos
 {
-    public class FeatureDto
+    internal class FeatureDto
     {
         public int Duration { get; set; }
     }
