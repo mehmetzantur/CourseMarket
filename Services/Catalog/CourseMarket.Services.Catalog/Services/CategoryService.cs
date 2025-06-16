@@ -29,11 +29,11 @@ namespace CourseMarket.Services.Catalog.Services
             return Response<List<CategoryDto>>.Success(categoriesDto, 200);
         }
 
-        public async Task<Response<CategoryDto>> CreateAsync(Category category)
+        public async Task<Response<CategoryDto>> CreateAsync(CategoryDto categoryDto)
         {
+            var category = _mapper.Map<Category>(categoryDto);
             await _categoryCollection.InsertOneAsync(category);
-            var categoryDto = _mapper.Map<CategoryDto>(category);
-            return Response<CategoryDto>.Success(categoryDto, 201);
+            return Response<CategoryDto>.Success(_mapper.Map<CategoryDto>(category), 201);
         }
 
         public async Task<Response<CategoryDto>> GetByIdAsync(string id)
