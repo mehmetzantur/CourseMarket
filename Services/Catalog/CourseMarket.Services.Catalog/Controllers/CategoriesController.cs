@@ -9,7 +9,7 @@ namespace CourseMarket.Services.Catalog.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    internal class CategoriesController : CustomControllerBase
+    public class CategoriesController : CustomControllerBase
     {
         private readonly ICategoryService _categoryService;
 
@@ -18,6 +18,7 @@ namespace CourseMarket.Services.Catalog.Controllers
             _categoryService = categoryService;
         }
 
+        [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var categories = await _categoryService.GetAllAsync();

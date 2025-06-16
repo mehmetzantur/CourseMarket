@@ -9,7 +9,7 @@ namespace CourseMarket.Services.Catalog.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    internal class CoursesController : CustomControllerBase
+    public class CoursesController : CustomControllerBase
     {
         private readonly ICourseService _courseService;
 
@@ -17,6 +17,8 @@ namespace CourseMarket.Services.Catalog.Controllers
         {
             _courseService = courseService;
         }
+
+        [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var response = await _courseService.GetAllAsync();
@@ -30,6 +32,7 @@ namespace CourseMarket.Services.Catalog.Controllers
             return CreateActionResultInstance(response);
         }
 
+        [HttpGet]
         [Route("api/[controller]/GetAllByUserId/{userId}")]
         public async Task<IActionResult> GetAllByUserId(string userId)
         {
@@ -44,7 +47,7 @@ namespace CourseMarket.Services.Catalog.Controllers
             return CreateActionResultInstance(response);
         }
 
-        [HttpPost]
+        [HttpPut]
         public async Task<IActionResult> Update(CourseUpdateDto courseUpdateDto)
         {
             var response = await _courseService.UpdateAsync(courseUpdateDto);

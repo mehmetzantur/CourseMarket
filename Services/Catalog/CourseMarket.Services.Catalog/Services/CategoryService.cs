@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CourseMarket.Services.Catalog.Services
 {
-    internal class CategoryService : ICategoryService
+    public class CategoryService : ICategoryService
     {
         private readonly IMongoCollection<Category> _categoryCollection;
         private readonly IMapper _mapper;
@@ -18,7 +18,7 @@ namespace CourseMarket.Services.Catalog.Services
         {
             var client = new MongoClient(databaseSettings.ConnectionString);
             var database = client.GetDatabase(databaseSettings.DatabaseName);
-            _categoryCollection = database.GetCollection<Category>(databaseSettings.CatalogCollectionName);
+            _categoryCollection = database.GetCollection<Category>(databaseSettings.CategoryCollectionName);
             _mapper = mapper;
         }
 

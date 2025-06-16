@@ -1,6 +1,6 @@
 ﻿namespace CourseMarket.Services.Catalog.Dtos
 {
-    internal class CourseUpdateDto
+    public class CourseUpdateDto
     {
         public string Id { get; set; }
         public string UserId { get; set; }

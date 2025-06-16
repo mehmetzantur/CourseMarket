@@ -1,6 +1,6 @@
 ﻿namespace CourseMarket.Services.Catalog.Dtos
 {
-    internal class CategoryDto
+    public class CategoryDto
     {
         public string Id { get; set; }
         public string Name { get; set; }
