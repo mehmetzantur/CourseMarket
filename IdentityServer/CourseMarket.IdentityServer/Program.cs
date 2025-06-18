@@ -3,6 +3,10 @@ using System.Text;
 using Duende.IdentityServer.Licensing;
 using CourseMarket.IdentityServer;
 using Serilog;
+using CourseMarket.IdentityServer.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using CourseMarket.IdentityServer.Models;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console(formatProvider: CultureInfo.InvariantCulture)
@@ -23,14 +27,14 @@ try
         .ConfigureServices()
         .ConfigurePipeline();
 
-    // this seeding is only for the template to bootstrap the DB and users.
-    // in production you will likely want a different approach.
-    if (args.Contains("/seed"))
+    using (var scope = app.Services.CreateScope())
     {
-        Log.Information("Seeding database...");
-        SeedData.EnsureSeedData(app);
-        Log.Information("Done seeding database. Exiting.");
-        return;
+        var serviceProvider = scope.ServiceProvider;
+        var applicationDbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
+        applicationDbContext.Database.Migrate();
+        var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+        if (!userManager.Users.Any())
+            userManager.CreateAsync(new ApplicationUser { UserName = "mehmetzantur", Email = "mehmetzantur@gmail.com", City = "Antalya" }, "Mehmet1.").Wait();
     }
 
     if (app.Environment.IsDevelopment())
