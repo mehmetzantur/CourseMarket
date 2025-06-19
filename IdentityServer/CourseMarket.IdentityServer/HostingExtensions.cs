@@ -4,6 +4,7 @@ using CourseMarket.IdentityServer.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using CourseMarket.IdentityServer.Services;
 
 namespace CourseMarket.IdentityServer;
 
@@ -35,7 +36,8 @@ internal static class HostingExtensions
             .AddInMemoryApiScopes(Config.ApiScopes)
             .AddInMemoryClients(Config.Clients)
             .AddAspNetIdentity<ApplicationUser>()
-            .AddLicenseSummary();
+            .AddLicenseSummary()
+            .AddResourceOwnerValidator<IdentityResourceOwnerPasswordValidator>();
 
         builder.Services.AddAuthentication()
             .AddGoogle(options =>
