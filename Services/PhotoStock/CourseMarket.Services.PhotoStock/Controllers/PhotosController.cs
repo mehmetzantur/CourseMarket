@@ -14,7 +14,7 @@ namespace CourseMarket.Services.PhotoStock.Controllers
     public class PhotosController : CustomControllerBase
     {
         [HttpPost]
-        public async Task<IActionResult> PhotoSave(IFormFile photo, CancellationToken cancellationToken) 
+        public async Task<IActionResult> Save(IFormFile photo, CancellationToken cancellationToken) 
         {
             if(photo is not null && photo.Length > 0)
             {
@@ -30,7 +30,7 @@ namespace CourseMarket.Services.PhotoStock.Controllers
             return CreateActionResultInstance(Response<PhotoDto>.Fail("Photo is empty!", 400));
         }
 
-        public IActionResult PhotoDelete(string photoUrl)
+        public IActionResult Delete(string photoUrl)
         {
             var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/photos", photoUrl);
             if (!System.IO.File.Exists(path))
