@@ -29,8 +29,9 @@ namespace CourseMarket.Services.Basket.Services
             return Response<BasketDto>.Success(JsonSerializer.Deserialize<BasketDto>(existBasket), 200);
         }
 
-        public async Task<Response<bool>> SaveOrUpdate(BasketDto basketDto)
+        public async Task<Response<bool>> SaveOrUpdate(BasketDto basketDto, string userId)
         {
+            basketDto.UserId = userId;
             var status = await _redisService.GetDb().StringSetAsync(basketDto.UserId, JsonSerializer.Serialize(basketDto));
             return status ? Response<bool>.Success(204) : Response<bool>.Fail("Basket could not update or save!", 500);
         }

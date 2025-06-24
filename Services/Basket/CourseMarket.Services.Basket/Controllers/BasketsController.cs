@@ -30,7 +30,7 @@ namespace CourseMarket.Services.Basket.Controllers
         [HttpPost]
         public async Task<IActionResult> SaveOrUpdate(BasketDto basketDto)
         {
-            var response = await _basketService.SaveOrUpdate(basketDto);
+            var response = await _basketService.SaveOrUpdate(basketDto, _identityService.GetUserId);
             return CreateActionResultInstance(response);
         }
 
