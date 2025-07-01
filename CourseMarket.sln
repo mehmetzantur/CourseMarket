@@ -25,6 +25,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Basket", "Basket", "{FFC2DF
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourseMarket.Services.Basket", "Services\Basket\CourseMarket.Services.Basket\CourseMarket.Services.Basket.csproj", "{10806A67-9690-4A2A-BEBE-5F6962D8221A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Discount", "Discount", "{E5CD38D3-7100-4C3B-9963-E5B30C5AE99D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourseMarket.Services.Discount", "Services\Discount\CourseMarket.Services.Discount\CourseMarket.Services.Discount.csproj", "{77E0B06A-63A0-4AEA-A505-F8CACB7E24F8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +55,10 @@ Global
 		{10806A67-9690-4A2A-BEBE-5F6962D8221A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{10806A67-9690-4A2A-BEBE-5F6962D8221A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10806A67-9690-4A2A-BEBE-5F6962D8221A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77E0B06A-63A0-4AEA-A505-F8CACB7E24F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77E0B06A-63A0-4AEA-A505-F8CACB7E24F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77E0B06A-63A0-4AEA-A505-F8CACB7E24F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77E0B06A-63A0-4AEA-A505-F8CACB7E24F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -64,6 +72,8 @@ Global
 		{B1045EF2-6B56-48B3-BB51-89F0483903C5} = {4F99B411-62CE-4E3B-8F4A-180F5AFDEC58}
 		{FFC2DF17-3A3B-44FF-B774-1A1A1735315B} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{10806A67-9690-4A2A-BEBE-5F6962D8221A} = {FFC2DF17-3A3B-44FF-B774-1A1A1735315B}
+		{E5CD38D3-7100-4C3B-9963-E5B30C5AE99D} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{77E0B06A-63A0-4AEA-A505-F8CACB7E24F8} = {E5CD38D3-7100-4C3B-9963-E5B30C5AE99D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FE587FEF-C337-4FC0-89E9-1C029902CCFC}

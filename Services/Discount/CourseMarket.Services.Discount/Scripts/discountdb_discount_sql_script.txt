@@ -1,0 +1,7 @@
+﻿CREATE TABLE public.discount (
+	id serial4 NOT NULL,
+	userid varchar(200) NOT NULL,
+	rate int2 NOT NULL,
+	code varchar(50) NOT NULL,
+	createddate timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
