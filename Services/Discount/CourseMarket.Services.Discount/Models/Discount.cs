@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CourseMarket.Services.Discount.Model
+namespace CourseMarket.Services.Discount.Models
 {
     [Dapper.Contrib.Extensions.Table("discount")]
     public class Discount
