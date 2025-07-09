@@ -1,4 +1,6 @@
 using CourseMarket.Services.Order.Infrastructure;
+using CourseMarket.Shared.Services;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -28,7 +30,9 @@ namespace CourseMarket.Services.Order.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<OrderDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), configure => configure.MigrationsAssembly("CourseMarket.Services.Order.Infrastructure")));
-
+            services.AddMediatR(typeof(Application.Handlers.CreateOrderCommandHandler).Assembly);
+            services.AddScoped<ISharedIdentityService, SharedIdentityService>();
+            services.AddHttpContextAccessor();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
