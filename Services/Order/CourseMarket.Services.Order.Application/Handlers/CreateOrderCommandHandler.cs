@@ -24,7 +24,7 @@ namespace CourseMarket.Services.Order.Application.Handlers
 
         public async Task<Response<CreatedOrderDto>> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
-            var newAddress = new Address(request.AddressDto.Province, request.AddressDto.District, request.AddressDto.ZipCode, request.AddressDto.Line, request.AddressDto.Street);
+            var newAddress = new Address(request.Address.Province, request.Address.District, request.Address.ZipCode, request.Address.Line, request.Address.Street);
             var newOrder = new Domain.OrderAggregate.Order(request.BuyerId, newAddress);
 
             request.OrderItems.ForEach(x =>
