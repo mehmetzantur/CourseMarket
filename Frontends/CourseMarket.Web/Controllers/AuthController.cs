@@ -30,7 +30,7 @@ namespace CourseMarket.Web.Controllers
             }
 
             var response = await _identityService.SignIn(signinInput);
-            if (response.IsSuccessful)
+            if (!response.IsSuccessful)
             {
                 response.Errors.ForEach(x => {
                     ModelState.AddModelError(string.Empty, x);

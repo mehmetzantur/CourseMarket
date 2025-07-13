@@ -20,21 +20,56 @@ namespace CourseMarket.Web.Services
     public class IdentityService : IIdentityService
     {
         private readonly HttpClient _httpClient;
-        private readonly HttpContextAccessor _contextAccessor;
+        private readonly IHttpContextAccessor  _contextAccessor;
         private readonly ClientSettings _clientSettings;
         private readonly ServiceApiSettings _serviceApiSettings;
 
-        public IdentityService(HttpClient httpClient, HttpContextAccessor contextAccessor, IOptions<ClientSettings> clientSettings, IOptions<ServiceApiSettings> serviceApiSettings)
+        public IdentityService(HttpClient httpClient, IOptions<ClientSettings> clientSettings, IOptions<ServiceApiSettings> serviceApiSettings, IHttpContextAccessor contextAccessor)
         {
             _httpClient = httpClient;
-            _contextAccessor = contextAccessor;
             _clientSettings = clientSettings.Value;
             _serviceApiSettings = serviceApiSettings.Value;
+            _contextAccessor = contextAccessor;
         }
 
-        public Task<TokenResponse> GetAccessTokenByRefleshToken()
+        public async Task<TokenResponse> GetAccessTokenByRefleshToken()
         {
-            throw new System.NotImplementedException();
+            var disco = await _httpClient.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest
+            {
+                Address = _serviceApiSettings.BaseUri,
+                Policy = new DiscoveryPolicy { RequireHttps = false }
+            });
+
+            if (disco.IsError) throw disco.Exception;
+
+            var refleshToken = await _contextAccessor.HttpContext.GetTokenAsync(OpenIdConnectParameterNames.RefreshToken);
+
+            RefreshTokenRequest refleshTokenRequest = new()
+            {
+                ClientId = _clientSettings.WebClientForUser.ClientId,
+                ClientSecret = _clientSettings.WebClientForUser.ClientSecret,
+                RefreshToken = refleshToken,
+                Address = disco.TokenEndpoint
+            };
+
+            var token = await _httpClient.RequestRefreshTokenAsync(refleshTokenRequest);
+            if (token.IsError) 
+            {
+                return null;
+            }
+
+            var authenticationTokens = new List<AuthenticationToken>() {
+                new AuthenticationToken { Name = OpenIdConnectParameterNames.AccessToken, Value = token.AccessToken },
+                new AuthenticationToken { Name = OpenIdConnectParameterNames.RefreshToken, Value = token.RefreshToken },
+                new AuthenticationToken { Name = OpenIdConnectParameterNames.ExpiresIn, Value = DateTime.Now.AddSeconds(token.ExpiresIn).ToString("o", CultureInfo.InvariantCulture) }
+            };
+
+            var authenticationResult = await _contextAccessor.HttpContext.AuthenticateAsync();
+            var properties = authenticationResult.Properties;
+            properties.StoreTokens(authenticationTokens);
+            await _contextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, authenticationResult.Principal, properties);
+
+            return token;
         }
 
         public Task RevokeRefleshToken()
