@@ -8,7 +8,7 @@ namespace CourseMarket.Web.Services.Interfaces
     public interface IIdentityService
     {
         Task<Response<bool>> SignIn(SigninInput signinInput);
-        Task<TokenResponse> GetAccessTokenByRefleshToken();
-        Task RevokeRefleshToken();
+        Task<TokenResponse> GetAccessTokenByRefreshToken();
+        Task RevokeRefreshToken();
     }
 }
