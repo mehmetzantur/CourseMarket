@@ -1,3 +1,4 @@
+using CourseMarket.Shared.Services;
 using CourseMarket.Web.Handlers;
 using CourseMarket.Web.Models;
 using CourseMarket.Web.Services;
@@ -27,13 +28,19 @@ namespace CourseMarket.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddHttpContextAccessor();
-            services.AddHttpClient<IIdentityService, IdentityService>();
             services.Configure<ClientSettings>(Configuration.GetSection("ClientSettings"));
             services.Configure<ServiceApiSettings>(Configuration.GetSection("ServiceApiSettings"));
             var serviceApiSettings = Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
+            services.AddHttpContextAccessor();
+            services.AddHttpClient<IIdentityService, IdentityService>();
+            services.AddHttpClient<ICatalogService, CatalogService>(opt =>
+            {
+                opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Catalog.Path}");
+            });
+            
 
             services.AddScoped<ResourceOwnerPasswordTokenHandler>();
+            services.AddScoped<ISharedIdentityService, SharedIdentityService>();
 
             services.AddHttpClient<IUserService, UserService>(opt =>
             {
