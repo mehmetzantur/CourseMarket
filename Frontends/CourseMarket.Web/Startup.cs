@@ -1,5 +1,6 @@
 using CourseMarket.Shared.Services;
 using CourseMarket.Web.Handlers;
+using CourseMarket.Web.Helpers;
 using CourseMarket.Web.Models;
 using CourseMarket.Web.Services;
 using CourseMarket.Web.Services.Interfaces;
@@ -34,6 +35,7 @@ namespace CourseMarket.Web
             services.AddHttpClient<IClientCredentialTokenService, ClientCredentialTokenService>();
             services.AddHttpContextAccessor();
             services.AddOpenIdConnectAccessTokenManagement();
+            services.AddSingleton<PhotoHelper>();
             services.AddHttpClient<IIdentityService, IdentityService>();
             services.AddHttpClient<ICatalogService, CatalogService>(opt =>
             {
