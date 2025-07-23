@@ -13,6 +13,7 @@ namespace CourseMarket.Web.Models.Catalogs
         public decimal Price { get; set; }
 
         public string Picture { get; set; }
+        public string StockPictureUrl { get; set; }
 
         public DateTime CreatedTime { get; set; }
 
