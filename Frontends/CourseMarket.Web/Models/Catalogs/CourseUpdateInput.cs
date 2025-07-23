@@ -1,20 +1,31 @@
-﻿namespace CourseMarket.Web.Models.Catalogs
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
+
+namespace CourseMarket.Web.Models.Catalogs
 {
     public class CourseUpdateInput
     {
         public string Id { get; set; }
         public string UserId { get; set; }
 
+        [Required]
         public string Name { get; set; }
 
+        [Required]
         public decimal Price { get; set; }
 
+        [Required]
         public string Description { get; set; }
 
+        [Display(Name = "Category")]
+        [Required]
         public string CategoryId { get; set; }
 
         public string Picture { get; set; }
 
         public FeatureViewModel Feature { get; set; }
+
+        [Display(Name = "Course Image")]
+        public IFormFile PhotoFormFile { get; set; }
     }
 }

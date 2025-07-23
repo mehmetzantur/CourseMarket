@@ -17,11 +17,13 @@ namespace CourseMarket.Web.Models.Catalogs
         public string Description { get; set; }
 
         [Display(Name = "Category")]
+        [Required]
         public string CategoryId { get; set; }
 
         public string Picture { get; set; }
 
         public FeatureViewModel Feature { get; set; }
+        
         [Display(Name = "Course Image")]
         public IFormFile PhotoFormFile{ get; set; }
     }
