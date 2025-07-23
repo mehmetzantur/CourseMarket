@@ -51,6 +51,9 @@ namespace CourseMarket.Web.Services
             var response = await _httpClient.GetAsync("courses");
             if(!response.IsSuccessStatusCode) return null;
             var responseSuccess = await response.Content.ReadFromJsonAsync<Response<List<CourseViewModel>>>();
+            responseSuccess.Data.ForEach(x => {
+                x.Picture = _photoHelper.GetPhotoStockUrl(x.Picture);
+            });
             return responseSuccess.Data;
         }
 
