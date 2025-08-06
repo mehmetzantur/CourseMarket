@@ -1,4 +1,5 @@
 using CourseMarket.Shared.Services;
+using CourseMarket.Web.Extensions;
 using CourseMarket.Web.Handlers;
 using CourseMarket.Web.Helpers;
 using CourseMarket.Web.Models;
@@ -31,31 +32,13 @@ namespace CourseMarket.Web
         {
             services.Configure<ClientSettings>(Configuration.GetSection("ClientSettings"));
             services.Configure<ServiceApiSettings>(Configuration.GetSection("ServiceApiSettings"));
-            var serviceApiSettings = Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
-            services.AddHttpClient<IClientCredentialTokenService, ClientCredentialTokenService>();
             services.AddHttpContextAccessor();
             services.AddOpenIdConnectAccessTokenManagement();
             services.AddSingleton<PhotoHelper>();
-            services.AddHttpClient<IIdentityService, IdentityService>();
-            services.AddHttpClient<ICatalogService, CatalogService>(opt =>
-            {
-                opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Catalog.Path}");
-            }).AddHttpMessageHandler<ClientCredentialTokenHandler>();
-
-            services.AddHttpClient<IPhotoStockService, PhotoStockService>(opt =>
-            {
-                opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.PhotoStock.Path}");
-            }).AddHttpMessageHandler<ClientCredentialTokenHandler>();
-
             services.AddScoped<ClientCredentialTokenHandler>();
             services.AddScoped<ResourceOwnerPasswordTokenHandler>();
             services.AddScoped<ISharedIdentityService, SharedIdentityService>();
-
-            services.AddHttpClient<IUserService, UserService>(opt =>
-            {
-                opt.BaseAddress = new Uri(serviceApiSettings.IdentityBaseUri);
-            }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
-
+            services.AddHttpClientServices(Configuration);
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, opts =>
             {
                 opts.LoginPath = "/Auth/SignIn";
@@ -63,7 +46,6 @@ namespace CourseMarket.Web
                 opts.SlidingExpiration = true;
                 opts.Cookie.Name = "coursemarketcookie";
             });
-
             services.AddControllersWithViews();
         }
 
