@@ -5,6 +5,8 @@ using CourseMarket.Web.Helpers;
 using CourseMarket.Web.Models;
 using CourseMarket.Web.Services;
 using CourseMarket.Web.Services.Interfaces;
+using CourseMarket.Web.Validators;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -46,7 +48,7 @@ namespace CourseMarket.Web
                 opts.SlidingExpiration = true;
                 opts.Cookie.Name = "coursemarketcookie";
             });
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CourseCreateInputValidator>());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

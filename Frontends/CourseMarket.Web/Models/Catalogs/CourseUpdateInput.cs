@@ -8,17 +8,13 @@ namespace CourseMarket.Web.Models.Catalogs
         public string Id { get; set; }
         public string UserId { get; set; }
 
-        [Required]
         public string Name { get; set; }
 
-        [Required]
         public decimal Price { get; set; }
 
-        [Required]
         public string Description { get; set; }
 
         [Display(Name = "Category")]
-        [Required]
         public string CategoryId { get; set; }
 
         public string Picture { get; set; }
