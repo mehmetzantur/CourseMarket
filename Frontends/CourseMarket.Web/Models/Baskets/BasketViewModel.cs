@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NuGet.ContentModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -33,6 +34,18 @@ namespace CourseMarket.Web.Models.Baskets
         }
 
         public decimal TotalPrice { get => _basketItems.Sum(x => x.GetCurrentPrice * x.Quantity); }
-        public bool HasDiscount { get => !string.IsNullOrEmpty(DiscountCode); }
+        public bool HasDiscount { get => !string.IsNullOrEmpty(DiscountCode) && DiscountRate.HasValue; }
+
+        public void CancelDiscount()
+        {
+            DiscountCode = null;
+            DiscountRate = null;
+        }
+
+        public void ApplyDiscount(string code, int rate)
+        {
+            DiscountRate = rate;
+            DiscountCode = code;
+        }
     }
 }
