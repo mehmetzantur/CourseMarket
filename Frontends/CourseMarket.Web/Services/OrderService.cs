@@ -46,7 +46,7 @@ namespace CourseMarket.Web.Services
                 var orderItem = new OrderItemCreateInput
                 {
                     ProductId = x.CourseId,
-                    Price = x.Price,
+                    Price = x.GetCurrentPrice,
                     PictureUrl = "",
                     ProductName = x.CourseName
                 };
@@ -56,7 +56,10 @@ namespace CourseMarket.Web.Services
             var response = await _httpClient.PostAsJsonAsync<OrderCreateInput>("orders", orderCreateInput);
             if(!response.IsSuccessStatusCode) return new OrderCreatedViewModel() {Error = "Order could not be created!", IsSuccessful=false};
 
-            return await response.Content.ReadFromJsonAsync<OrderCreatedViewModel>();
+            var orderCreatedViewModel = await response.Content.ReadFromJsonAsync<Response<OrderCreatedViewModel>>();
+            orderCreatedViewModel.Data.IsSuccessful = true;
+            await _basketService.Delete();
+            return orderCreatedViewModel.Data;
 
             }
 
