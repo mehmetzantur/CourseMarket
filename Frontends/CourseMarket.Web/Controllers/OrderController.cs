@@ -1,6 +1,7 @@
 ﻿using CourseMarket.Web.Models.Orders;
 using CourseMarket.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace CourseMarket.Web.Controllers
@@ -26,16 +27,22 @@ namespace CourseMarket.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Checkout(CheckoutInfoInput checkoutInfoInput)
         {
-            var orderStatus = await _orderService.CreateOrder(checkoutInfoInput);
-            if (!orderStatus.IsSuccessful)
+            // for sync
+            //var orderStatus = await _orderService.CreateOrder(checkoutInfoInput);
+
+            var orderSuspend = await _orderService.SuspendOrder(checkoutInfoInput);
+            if (!orderSuspend.IsSuccessful)
             {
                 var basket = await _basketService.Get();
                 ViewBag.basket = basket;
-                ViewBag.error = orderStatus.Error;
+                ViewBag.error = orderSuspend.Error;
                 return View();
             }
 
-            return RedirectToAction(nameof(SuccessfulCheckout), new {orderId = orderStatus.OrderId});
+            // for sync
+            //return RedirectToAction(nameof(SuccessfulCheckout), new {orderId = orderSuspend.OrderId});
+
+            return RedirectToAction(nameof(SuccessfulCheckout), new { orderId = new Random().Next(1,1000) });
 
         }
 
