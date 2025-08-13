@@ -1,4 +1,5 @@
-﻿using CourseMarket.Shared.ControllerBases;
+﻿using CourseMarket.Services.FakePayment.Models;
+using CourseMarket.Shared.ControllerBases;
 using CourseMarket.Shared.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +12,7 @@ namespace CourseMarket.Services.FakePayment.Controllers
     public class FakePaymentsController : CustomControllerBase
     {
         [HttpPost]
-        public IActionResult ReceivePayment()
+        public IActionResult ReceivePayment(PaymentDto paymentDto)
         {
             return CreateActionResultInstance<NoContent>(Response<NoContent>.Success(200));
         }
