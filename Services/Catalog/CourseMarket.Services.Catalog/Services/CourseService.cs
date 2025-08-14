@@ -91,7 +91,7 @@ namespace CourseMarket.Services.Catalog.Services
             if (result is null)
                 return Response<NoContent>.Fail("Course not found!", 404);
 
-            await _publishEndpoint.Publish<CourseNameChangedEvent>(new CourseNameChangedEvent { CourseId = updateCourse.Id, UpdatedName = updateCourse.Name });
+            await _publishEndpoint.Publish(new CourseNameChangedEvent { CourseId = updateCourse.Id, UpdatedName = updateCourse.Name });
 
             return Response<NoContent>.Success(204);
         }
