@@ -37,7 +37,8 @@ internal static class HostingExtensions
             .AddInMemoryClients(Config.Clients)
             .AddAspNetIdentity<ApplicationUser>()
             .AddLicenseSummary()
-            .AddResourceOwnerValidator<IdentityResourceOwnerPasswordValidator>();
+            .AddResourceOwnerValidator<IdentityResourceOwnerPasswordValidator>()
+            .AddExtensionGrantValidator<TokenExchangeExtensionGrantValidator>();
 
         builder.Services.AddAuthentication()
             .AddGoogle(options =>
