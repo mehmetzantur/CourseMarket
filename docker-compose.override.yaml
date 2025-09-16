@@ -30,7 +30,7 @@ services:
     ports:
       - "1433:1433"
     volumes:
-      - identitydb_volume:/var/opt/mssql/data
+      - identitydb_volume:/var/opt/mssql
     environment:
       - ACCEPT_EULA=Y
       - MSSQL_SA_PASSWORD=Identitydb1.
@@ -41,7 +41,7 @@ services:
     ports:
       - "1444:1444"
     volumes:
-      - orderdb_volume:/var/opt/mssql/data
+      - orderdb_volume:/var/opt/mssql
     environment:
       - ACCEPT_EULA=Y
       - MSSQL_SA_PASSWORD=Orderdb1.
@@ -66,7 +66,7 @@ services:
     container_name: identityserver.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings:DefaultConnection=Server=identitydb,1433; Database=IdentityDb; User=sa; Password=Identitydb1.;TrustServerCertificate=true
+      - "ConnectionStrings:DefaultConnection=Server=identitydb,1433; Database=IdentityDb; User=sa; Password=Identitydb1.;TrustServerCertificate=true"
     ports:
       - "5001:80"
     depends_on:
