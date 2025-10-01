@@ -32,6 +32,11 @@ services:
     build:
       context: .
       dockerfile: Services/PhotoStock/CourseMarket.Services.PhotoStock/Dockerfile
+  discount.api:
+    image: discount_api_image
+    build:
+      context: .
+      dockerfile: Services/Discount/CourseMarket.Services.Discount/Dockerfile
 volumes:
   catalogdb_volume:
   discountdb_volume:
