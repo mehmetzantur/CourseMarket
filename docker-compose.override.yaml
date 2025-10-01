@@ -100,7 +100,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - IdentityServerUrl=http://identityserver.api:5001
-      - ConnectionStrings:PostgreSql=User Id=admin; Password=Discountdb1.; Server=localhost; Port=5432; Database=discountdb; Integrated Security=true; Pooling=true
+      - ConnectionStrings:PostgreSql=User Id=admin; Password=Discountdb1.; Server=discountdb; Port=5432; Database=discountdb; Integrated Security=true; Pooling=true
     ports:
       - "5014:80"
     depends_on:
@@ -113,3 +113,14 @@ services:
       - IdentityServerUrl=http://identityserver.api:5001
     ports:
       - "5016:80"
+  order.api:
+    container_name: order.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - RabbitMQUrl=rabbitmq
+      - IdentityServerUrl=http://identityserver.api:5001
+      - ConnectionStrings:DefaultConnection=Server=orderdb,1444; Database=OrderDb; User=sa; Password=Orderdb1.;TrustServerCertificate=true
+    ports:
+      - "5015:80"
+    depends_on:
+      - orderdb
