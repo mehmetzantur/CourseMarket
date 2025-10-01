@@ -56,7 +56,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - RabbitMQUrl=rabbitmq
-      - IdentityServerUrl=http://identityserver.api:5001
+      - IdentityServerUrl=http://identityserver.api
       - DatabaseSettings:ConnectionString=mongodb://catalogdb:27017
     ports:
       - "5011:80"
@@ -64,6 +64,7 @@ services:
       - catalogdb
   identityserver.api:
     container_name: identityserver.api
+    restart: on-failure
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:80
@@ -77,7 +78,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - RabbitMQUrl=rabbitmq
-      - IdentityServerUrl=http://identityserver.api:5001
+      - IdentityServerUrl=http://identityserver.api
       - RedisSettings:Port=6379
       - RedisSettings:Host=basketdb
     ports:
@@ -88,7 +89,7 @@ services:
     container_name: photostock.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - IdentityServerUrl=http://identityserver.api:5001
+      - IdentityServerUrl=http://identityserver.api
     ports:
       - "5012:80"
     volumes:
@@ -99,7 +100,7 @@ services:
     container_name: discount.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - IdentityServerUrl=http://identityserver.api:5001
+      - IdentityServerUrl=http://identityserver.api
       - ConnectionStrings:PostgreSql=User Id=admin; Password=Discountdb1.; Server=discountdb; Port=5432; Database=discountdb; Integrated Security=true; Pooling=true
     ports:
       - "5014:80"
@@ -110,7 +111,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - RabbitMQUrl=rabbitmq
-      - IdentityServerUrl=http://identityserver.api:5001
+      - IdentityServerUrl=http://identityserver.api
     ports:
       - "5016:80"
   order.api:
@@ -118,9 +119,16 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - RabbitMQUrl=rabbitmq
-      - IdentityServerUrl=http://identityserver.api:5001
+      - IdentityServerUrl=http://identityserver.api
       - ConnectionStrings:DefaultConnection=Server=orderdb,1444; Database=OrderDb; User=sa; Password=Orderdb1.;TrustServerCertificate=true
     ports:
       - "5015:80"
     depends_on:
       - orderdb
+  gateways.web:
+    container_name: gateways.web
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - IdentityServerUrl=http://identityserver.api
+    ports:
+      - "5000:80"

@@ -47,6 +47,11 @@ services:
     build:
       context: .
       dockerfile: Services/Order/CourseMarket.Services.Order.API/Dockerfile
+  gateways.web:
+    image: gateways_web_image
+    build:
+      context: .
+      dockerfile: Gateways/CourseMarket.Gateways.Web/Dockerfile
 volumes:
   catalogdb_volume:
   discountdb_volume:
