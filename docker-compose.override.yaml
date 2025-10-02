@@ -101,7 +101,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - IdentityServerUrl=http://identityserver.api
-      - ConnectionStrings:PostgreSql=User Id=admin; Password=Discountdb1.; Server=discountdb; Port=5432; Database=discountdb; Integrated Security=true; Pooling=true
+      - ConnectionStrings:PostgreSql=User Id=admin; Password=Discountdb1.; Server=discountdb; Port=5432; Database=discountdb; Pooling=true
     ports:
       - "5014:80"
     depends_on:
@@ -120,7 +120,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - RabbitMQUrl=rabbitmq
       - IdentityServerUrl=http://identityserver.api
-      - ConnectionStrings:DefaultConnection=Server=orderdb,1444; Database=OrderDb; User=sa; Password=Orderdb1.;TrustServerCertificate=true
+      - ConnectionStrings:DefaultConnection=Server=orderdb,1433; Database=OrderDb; User=sa; Password=Orderdb1.;TrustServerCertificate=true
     ports:
       - "5015:80"
     depends_on:
@@ -132,3 +132,21 @@ services:
       - IdentityServerUrl=http://identityserver.api
     ports:
       - "5000:80"
+  aspnetcoremvc.web:
+    container_name: aspnetcoremvc.web
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - ServiceApiSettings:IdentityBaseUri=http://identityserver.api
+      - ServiceApiSettings:GatewayBaseUri=http://gateways.web
+    ports:
+      - "5010:80"
+    depends_on:
+      - gateways.web
+      - identityserver.api
+      - catalog.api
+      - photostock.api
+      - basket.api
+      - discount.api
+      - order.api
+      - fakepayment.api

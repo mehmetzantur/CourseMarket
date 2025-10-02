@@ -52,6 +52,11 @@ services:
     build:
       context: .
       dockerfile: Gateways/CourseMarket.Gateways.Web/Dockerfile
+  aspnetcoremvc.web:
+    image: aspnetcoremvc_web_image
+    build:
+      context: .
+      dockerfile: Frontends/CourseMarket.Web/Dockerfile
 volumes:
   catalogdb_volume:
   discountdb_volume:
