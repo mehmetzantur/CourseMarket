@@ -7,11 +7,56 @@ services:
   discountdb:
     image: postgres
   identitydb:
-    image: mcr.microsoft.com/mssql/server
+    image: mcr.microsoft.com/mssql/server:2019-latest
   orderdb:
-    image: mcr.microsoft.com/mssql/server
+    image: mcr.microsoft.com/mssql/server:2019-latest
   rabbitmq:
     image: rabbitmq:3.8.14-management
+  catalog.api:
+    image: catalog_api_image
+    build:
+      context: .
+      dockerfile: Services/Catalog/CourseMarket.Services.Catalog/Dockerfile
+  identityserver.api:
+    image: identityserver_api_image
+    build:
+      context: .
+      dockerfile: IdentityServer/CourseMarket.IdentityServer/Dockerfile
+  basket.api:
+    image: basket_api_image
+    build:
+      context: .
+      dockerfile: Services/Basket/CourseMarket.Services.Basket/Dockerfile
+  photostock.api:
+    image: photostock_api_image
+    build:
+      context: .
+      dockerfile: Services/PhotoStock/CourseMarket.Services.PhotoStock/Dockerfile
+  discount.api:
+    image: discount_api_image
+    build:
+      context: .
+      dockerfile: Services/Discount/CourseMarket.Services.Discount/Dockerfile
+  fakepayment.api:
+    image: fakepayment_api_image
+    build:
+      context: .
+      dockerfile: Services/FakePayment/CourseMarket.Services.FakePayment/Dockerfile
+  order.api:
+    image: order_api_image
+    build:
+      context: .
+      dockerfile: Services/Order/CourseMarket.Services.Order.API/Dockerfile
+  gateways.web:
+    image: gateways_web_image
+    build:
+      context: .
+      dockerfile: Gateways/CourseMarket.Gateways.Web/Dockerfile
+  aspnetcoremvc.web:
+    image: aspnetcoremvc_web_image
+    build:
+      context: .
+      dockerfile: Frontends/CourseMarket.Web/Dockerfile
 volumes:
   catalogdb_volume:
   discountdb_volume:
